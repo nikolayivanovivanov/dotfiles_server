@@ -1,3 +1,12 @@
+"# On the server
+"cd ~
+"rm .vimrc
+"wget https://raw.githubusercontent.com/nikolayivanovivanov/dotfiles_server/main/.vimrc
+"mkdir ~/.vim/tmp
+"rm .tmux.conf
+"wget https://raw.githubusercontent.com/nikolayivanovivanov/dotfiles_server/main/.tmux.conf
+
+
 set encoding=utf-8
 
 set clipboard+=unnamed
