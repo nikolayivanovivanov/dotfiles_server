@@ -49,6 +49,12 @@ set timeoutlen=1000 ttimeoutlen=0
 
 set wrap linebreak nolist
 
+" Splitting the window automatically focus the new split, but as the default
+" config is splitabove and splitleft, the false impression is that we do not
+" focus the new split
+set splitbelow
+set splitright
+
 "set spell for text and markdown files
 augroup markdownSpell
     autocmd!
@@ -91,30 +97,6 @@ Plug 'vim-scripts/ReplaceWithRegister'
 
 Plug 'tpope/vim-fugitive'
 
-" Will add custom commands to try to make them common for svn too
-" Add the current file
-command Vadd Gwrite
-" command Vwrite Gwrite
-" Ignore current changes and read the file again from the VCS
-command Vcheckout Gread
-" Delete the current file and the corresponding Vim buffer
-command Vrm Gremove
-" Rename the current file and the corresponding Vim buffer
-command Vmv Gmove
-command Vcommit echom "Use Vstatus, - to add/remove tile, Enter to edit it, and capital C to commit"
-" command Vstatus Git
-command Vcs Git
-command VCS Git
-command Tvc Git
-command Tvcm Git
-
-" Like the Idea Annotation - to see who and when made the changes per line
-command Vblame Gblame
-command Vdiff Gdiff
-command Vlog Glog
-command VdiffToPatch :!git diff HEAD > ~/changes.patch
-command VPush Gpush
-
 " Will use Signify
 " Plug 'airblade/vim-gitgutter' " for showing a git diff in the sign column
 "let g:gitgutter_git_executable = 'C:\Program Files\Git\bin\git.exe'
@@ -156,9 +138,6 @@ let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=1
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-" The command is :FZF
-command Of FZF
-
 Plug 'mileszs/ack.vim'
 Plug 'vim-scripts/taglist.vim'
 Plug 'editorconfig/editorconfig-vim'
@@ -180,18 +159,6 @@ augroup vimrc_todo
 augroup END
 hi def link MyTodo Todo
 
-" Nerdtree
-command Tp NERDTreeToggle
-command Ts Tlist
-command TF Ack
-nnoremap <C-S-f> :Ack<space>
-command Th TlistClose | NERDTreeClose
-
-command Reload source $MYVIMRC
-" Hide all tools
-map <S-Esc> :TlistClose<CR>:NERDTreeClose<CR>
-command CopyPath let @" = expand("%")
-command CopyPathFull let @" = expand("%:p")
 
 
 inoremap <C-Space> <C-n>
@@ -201,14 +168,17 @@ set sel=inclusive
 
 " Not tested
 noremap <C-F4> <C-[>:bd<CR>
-nnoremap <C-S-o>f :FZF<CR>
-nnoremap <C-S-o>r :FZF<CR>
-nnoremap <C-S-a> z=
-
-nnoremap <C-S-Space>p :NERDTreeToggle<CR>
-nnoremap <C-S-Space><C-S-p> :NERDTreeToggle<CR>
-nnoremap <C-S-Space><Space> :Tlist<CR>
-nnoremap <C-S-Space><C-S-Space> :Tlist<CR>
+" Does not work, because the terminals cannot make difference between
+" Ctrl-char and Ctrl-Shift-char.
+"nmap <C-S-O>f :FZF<CR>
+"nmap <C-S-O>r :FZF<CR>
+"noremap <C-S-A> z=
+"noremap <C-a> ggVG
+"
+"nmap <C-S-Space>p :NERDTreeToggle<CR>
+"nmap <C-S-Space><C-S-p> :NERDTreeToggle<CR>
+"nmap <C-S-Space><Space> :Tlist<CR>
+"nmap <C-S-Space><C-S-Space> :Tlist<CR>
 
 
 " try these. They work when line is wrapped. Just like on ideavim
@@ -216,5 +186,79 @@ nnoremap k gk
 nnoremap gk k
 nnoremap j gj
 nnoremap gj j
+
+
+" Custom actions for VIM and IdeaVim consistency. Will use programmable
+" keyboard for shortcuts - max 4 chars
+" MC copy (path, pathFull, r - reference, l - line, location)
+command MCpath let @" = expand("%")
+command MCl let @" = join([expand('%'),  line(".")], ':')
+command MCpathFull let @" = expand("%:p")
+" command MCr
+
+" MA apply, action (Fix)
+command MAfix z=
+command MAf z=
+
+" MT tool
+command MTp NERDTreeToggle
+command MTP NERDTreeToggle
+command MTs Tlist
+command MTf Ack
+command MTh TlistClose | NERDTreeClose
+command MTH TlistClose | NERDTreeClose
+command MTv Git
+
+" MV VCS (c,u,h,m - commit, update, history, menu...)
+" Will add custom commands to try to make them common for svn too
+" Add the current file
+command MVadd Gwrite
+" command Vwrite Gwrite
+" Ignore current changes and read the file again from the VCS
+command MVcheckout Gread
+" Delete the current file and the corresponding Vim buffer
+command MVrm Gremove
+" Rename the current file and the corresponding Vim buffer
+command MVmv Gmove
+command MVcommit echom "Use Vstatus, - to add/remove tile, Enter to edit it, and capital C to commit"
+" command Vstatus Git
+command MV Git
+
+" Like the Idea Annotation - to see who and when made the changes per line
+command MVb Gblame
+command MVa Gblame
+command MVdiff Gdiff
+command MVlog Glog
+command MVh Glog
+command MVdiffToPatch :!git diff HEAD > ~/changes.patch
+command MVPush Gpush
+
+" MF find (f or nothing - find file, s - symbol, c - class, without anything - global
+" project search, u - usages if file, U - usages in project)
+cnoreabbrev MFt Ack
+cnoreabbrev MFU Ack
+cnoreabbrev MFu Ack
+
+" MO open
+command MOf FZF
+command MOr FZF
+
+" MR rename, refactor
+command MRr *Ncgn{new name}<C-[>
+
+" Mw workspace
+command MWl SLoad
+command MWs SSave
+command MWww set invwrap
+command MWln set invrelativenumber
+
+" MQ quit - fix the confusion between close and quit. On IdeaVim we cannot bd
+" to close the buffer, but just q to close the tab - tabs vs buffers
+" difference
+command MQ bd
+command MQw w|bd
+
+" MWW wordwrap
+
 
 
