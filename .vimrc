@@ -258,7 +258,443 @@ command MWln set invrelativenumber
 command MQ bd
 command MQw w|bd
 
-" MWW wordwrap
+
+
+
+
+" Copy of common file
+" Common for idea and gvim
+" 
+" This is not comfortable on ideavim. After search it goes to the top or
+" bottom most line and after the firtst move, jumps and causes me a motion
+" sickness
+" set scrolloff=15
+set scrolloff=3
+set sidescrolloff=15
+"set relativenumber
+"set number
+" Case insensitive search by default. Use \C (capicap c) after the search term to make is case sensitive
+set ic
+set hls is
+
+" Not good, because messes the idea macros
+"inoremap ;; <C-[>m'A;<C-[>`'
+"inoremap ,, <C-[>
+"inoremap '' ''<C-[>i
+"inoremap "" ""<C-[>i
+"inoremap `` ``<C-[>i
+"inoremap () ()<C-[>i
+"inoremap {} {}<C-[>i
+"inoremap {{}} {{  }}<C-[>hhi
+"inoremap [] []<C-[>i
+"inoremap <> <><C-[>i
+"inoremap $$ $this->
+"inoremap -- ->
+"inoremap -] ->
+"inoremap >> ->
+
+" when this is set IDEA cannot find variables with *
+"set isk+=$
+" Temporarily to avoid old Ctrl s
+"noremap S <nop>
+
+" Didn't work on Idea - Start in insert mode
+"set insertmode
+" Remap C-W to close tab and C-Q to the VIM windows control
+" Copy paste from system clipboard. Could be done with C-r" in search and command mode
+"nnoremap <Leader>cy "*y
+"nnoremap <Leader>cp "*p
+"nnoremap <Leader>cY "+y
+"nnoremap <Leader>cP "+p
+"nnoremap <Leader>s ysiw
+" Enter in normal mode automatically change to insert and Enter
+"nnoremap <Enter> a<Enter>
+"inoremap <Leader><Space> <C-[>
+"inoremap <Leader>i <C-[>
+"vnoremap <Leader><Space> <C-[>
+"vnoremap <Leader>i <C-[>
+"nnoremap <Enter> a<Enter><C-[>
+"snoremap <Leader><Space> <C-[>
+"snoremap <Leader>i <C-[>
+
+" use Backspace for Win better workflow
+"nnoremap <Enter> o
+"nnoremap <S-Enter> O
+"noremap o <nop>
+"noremap O <nop>
+
+nmap <Space> <nop>
+" If I make this to delete in normal mode, if we are in command mode and deleting text there, after we reach the beginning, the command box is closed and deleting continues in the text editor
+nmap <BS> <nop>
+"noremap d <nop>
+
+" After yank in visual mode, keep the cursor to the end of the selection, but not back to the initial one.
+"vmap y ygv<C-[>
+
+" \o add empty line below \O - above, but without moving the cursor and without entering in insert mode.
+nnoremap <Leader>o m'o<C-[>`'
+nnoremap <Leader>O m'O<C-[>`'
+
+" the commentary plugin is bugged when used in macros, so use this
+" Not working on HTML. Only adds // at the beginning of the line
+"nnoremap gc/ m'I//<C-[>`'
+"nnoremap gC/ m'^xx<C-[>`'
+"nnoremap gcc m'I//<C-[>`'
+"nnoremap gCc m'^xx<C-[>`'
+"nnoremap gCC m'^xx<C-[>`'
+"nnoremap gc# m'I#<C-[>`'
+"nnoremap gC# m'^x<C-[>`'
+"nnoremap gc" m'I"<C-[>`'
+"nnoremap gC" m'^x<C-[>`'
+"nnoremap gc; m'I;<C-[>`'
+"nnoremap gC; m'^x<C-[>`'
+"nnoremap gc{ m'I{*<C-[>A*}<C-[>`'
+"nnoremap gC{ m'^xx<C-[>$xx<C-[>`'
+"nnoremap gc< m'I<lt>!--<C-[>A--><C-[>`'
+"nnoremap gC< m'^xxxx<C-[>$xxx<C-[>`'
+"
+"vnoremap gc/ m'o<C-[>^<C-V>`'I//<C-[>
+"vnoremap gC/ ^m'o<C-[>^<C-V>`'lx<C-[>
+"vnoremap gcc m'o<C-[>^<C-V>`'I//<C-[>
+"vnoremap gCc ^m'o<C-[>^<C-V>`'lx<C-[>
+"vnoremap gCC ^m'o<C-[>^<C-V>`'lx<C-[>
+"vnoremap gc# m'o<C-[>^<C-V>`'I#<C-[>
+"vnoremap gC# ^m'o<C-[>^<C-V>`'x<C-[>
+"vnoremap gc" m'o<C-[>^<C-V>`'I"<C-[>
+"vnoremap gC" ^m'o<C-[>^<C-V>`'x<C-[>
+"vnoremap gc; m'o<C-[>^<C-V>`'I;<C-[>
+"vnoremap gC; ^m'o<C-[>^<C-V>`'x<C-[>
+"vnoremap gc{ m'o<C-[>i{*<C-[>`'a*}<C-[>
+"vnoremap gc< m'o<C-[>i<lt>!--<C-[>`'a--><C-[>
+
+
+"vnoremap <Leader>/{ I{*<C-[>
+"vnoremap <Leader>/} I*}<C-[>
+"nnoremap <Leader>/< I<!--<C-[>
+
+" Delete something sendng it to the null register. Will not move the currently yanked content
+"nnoremap <leader>d "_d
+"vnoremap <leader>d "_d
+"snoremap <leader>d "_d
+
+nnoremap <leader>d d
+vnoremap <leader>d d
+snoremap <leader>d d
+
+nnoremap d "_d
+vnoremap d "_d
+snoremap d "_d
+
+nnoremap x "_x
+vnoremap x "_x
+snoremap x "_x
+
+nnoremap c "_c
+vnoremap c "_c
+snoremap c "_c
+
+
+"noremap d <nop>
+"noremap x <nop>
+"noremap s <nop>
+"noremap p <nop>
+
+"noremap D <nop>
+"noremap X <nop>
+"noremap S <nop>
+"noremap P <nop>
+"
+"" Temporary till I get used to this
+"noremap d v
+"noremap x v
+"noremap s v
+"noremap p v
+"
+"noremap dd V
+"noremap xx V
+"noremap ss V
+"noremap pp V
+"
+"
+"noremap D v$
+"noremap X v$
+"noremap S v$
+"noremap P v$
+"
+"noremap u <nop>
+"noremap <C-r> <nop>
+
+" Didn't work when copy from second char of line till the end. It placed the first char at the end
+"nnoremap <C-c> dP
+"vnoremap <C-c> dP
+"snoremap <C-c> dP
+
+"nnoremap <C-c><C-c> ddP
+
+"nnoremap y dP
+"vnoremap y dP
+"snoremap y dP
+
+"nnoremap <C-X> dh
+"vnoremap <C-X> dh
+"snoremap <C-X> dh
+
+"nnoremap <C-x><C-x> dd
+
+" g is used to leave the cursor after the pasted text
+"nnoremap <C-V> gp
+"nnoremap <C-S-V> gP
+
+" To enagle paste with Ctrl+V enable this
+"vmap <C-V> <C-R>+
+"imap <C-V> <C-R>+
+"cmap <C-V> <C-R>+
+
+cmap <S-Insert> <C-R>+
+
+
+vnoremap <BS> "_x
+"nnoremap <BS> "_dh
+"nnoremap <BS><BS> "_dd
+
+" Move yanked to register a
+" This does not work on Idea. Changing registers and thus macroses does not work
+"nnoremap <Leader>ra :let @a=@0<cr>
+
+" `] Go to the last character of the previously yanked text
+"vmap y y`]
+" Delete line needs separate mapping, because <Leader>d (see abbove) waits for folowing actionu
+" Yank till the end if the line
+"noremap Y y$
+" Yank the line, but without the leading whitespace and without the new line at the end
+"nnoremap <leader>yy ^y$
+"nnoremap <leader>dd "_dd
+"nnoremap dd "_dd
+" paste the last yanked one
+nnoremap <Leader>p "0p
+nnoremap <Leader>P "0P
+" https://superuser.com/a/656954/1130857
+" List contents of all registers (that typically contain pasteable text).
+"This messes the ideavim surround plugin
+"nnoremap <silent> "" :registers "0123456789abcdefghijklmnopqrstuvwxyz*+.<CR>
+" Bookmark current location under ', append ; at the end of line, go to bookmarked column
+nnoremap <Leader>; m'A;<C-[>`'
+" Delete/yank/select whole section (function, condition, while...).
+" Can be used to select if section, then the else one by repeading again
+" This works if you are inside or on the brackets, but not on the function name
+" nnoremap <Leader>vs va{o0
+vnoremap vs a{o0
+" Select variable or property of property of object, including the $ char
+"nnoremap <Leader>vv viwoF$
+vnoremap vp iwoF$
+" nnoremap <Leader>vl ^v$
+vnoremap vl <C-[>^v$
+vnoremap vd a`o2F`
+vnoremap vj iwobb
+nnoremap <Leader>yy ^y$
+
+" Not tested Rename current
+nnoremap c* *<C-o>cgn
+
+" Go to the end of the previous selecton
+" This does not work in the real vim
+" nnoremap <Leader>gv gv<C-[>
+" `] end of previous selection `[ beginning of previous selection
+nnoremap <Leader>gv `]
+
+" Surroind with single quotes
+" For more advanced surround, use the Surround plugin
+"nnoremap <Leader>' diwi'<C-C>pa'<ESC>
+"vnoremap <Leader>' d<C-C>i'<C-c>pa'<ESC>
+
+" Indeed the surround plugin works
+nnoremap <Leader>' diwi'<ESC>pa'<ESC>
+vnoremap <Leader>' d<C-C>i'<ESC>pa'<ESC>
+nnoremap <Leader>` diwi`<ESC>pa`<ESC>
+vnoremap <Leader>` d<C-C>i`<ESC>pa`<ESC>
+nnoremap <Leader>" diwi"<ESC>pa"<ESC>
+vnoremap <Leader>" d<C-C>i"<ESC>pa"<ESC>
+nnoremap <Leader>{ diwi{<ESC>pa}<ESC>
+vnoremap <Leader>{ d<C-C>i{<ESC>pa}<ESC>
+nnoremap <Leader>( diwi(<ESC>pa)<ESC>
+vnoremap <Leader>( d<C-C>i(<ESC>pa)<ESC>
+nnoremap <Leader>[ diwi[<ESC>pa]<ESC>
+vnoremap <Leader>[ d<C-C>i[<ESC>pa]<ESC>
+nnoremap <Leader>} diwi{{ <ESC>pa }}<ESC>
+vnoremap <Leader>} d<C-C>i{{ <ESC>pa }}<ESC>
+" Now delete the surroundings
+nnoremap <Leader>x' "bdi'xh"bPlx
+vnoremap <Leader>x' "bdxh"bPlx
+nnoremap <Leader>x` "bdi`xh"bPlx
+vnoremap <Leader>x` "bdxh"bPlx
+nnoremap <Leader>x" "bdi"xh"bPlx
+vnoremap <Leader>x" "bdxh"bPlx
+nnoremap <Leader>x{ "bdi{xh"bPlx
+vnoremap <Leader>x{ "bdxh"bPlx
+nnoremap <Leader>x( "bdi(xh"bPlx
+vnoremap <Leader>x( "bdxh"bPlx
+nnoremap <Leader>x[ "bdi[xh"bPlx
+vnoremap <Leader>x[ "bdxh"bPlx
+
+" Disable highlighting of search till the next search
+" Disable highlighting of search till the next search
+"nnoremap <C-C> :noh<CR><C-C>
+"vnoremap <C-C> :noh<CR><C-C>
+vnoremap <ESC> :noh<CR><ESC>
+nnoremap <ESC> :noh<CR><ESC>
+"nnoremap <C-[> :noh<CR><C-[>
+"vnoremap <C-[> :noh<CR><C-[>
+" Disable Escape, because it closes the IDE popup windows (diff, find...). Use Ctrl-c to escape
+"vnoremap <ESC> <NOP>
+" Slows down the k letter. Use the built in C-c or C-[
+"inoremap kj <C-[>
+"vnoremap kj <C-[>
+"snoremap kj <C-[>
+" Use AHK to make sure CapsLock is off when entering in normal mode
+"inoremap <C-I> <C-[>
+"vnoremap <C-I> <C-[>
+"snoremap <C-I> <C-[>
+" Search for the selected text. Based on https://vim.fandom.com/wiki/Search_for_visually_selected_text
+" but as the default register " didn't work in PhpStorm, I used the first one 0
+" This did't really work well for me. I'll use the built in Idea Ctrl /
+" Or even better <C-Q> (it is C-V, but msvimc makes is paste) to enter visual mode, make selection down till where you want to comment, type what you want (//) ,Esc
+"vnoremap // y/\V<C-R>0<CR>
+" too difficutl. Let the ide shortcuts for this
+"nmap * :action HighlightUsagesInFile<CR>
+" Disable sound
+set visualbell
+set noerrorbells
+" Disable arrow keys till you learn. This does not really work on Idea, but I'll leave it here for easy port to the real VIM
+"noremap <Up> <nop>
+"noremap <Down> <nop>
+"noremap <Left> <nop>
+"noremap <Right> <nop>
+
+nnoremap <Up> k
+nnoremap <Down> j
+nnoremap <Left> h
+nnoremap <Right> l
+
+vnoremap <Up> k
+vnoremap <Down> j
+vnoremap <Left> h
+vnoremap <Right> l
+
+snoremap <Up> k
+snoremap <Down> j
+snoremap <Left> h
+snoremap <Right> l
+
+nnoremap <silent> <C-Right> w
+nnoremap <silent> <C-Left> b
+" When selection from left to right, the default Windows behavior is to select till the end of the word, but not till the beginning of the next one.
+vnoremap <silent> <C-Right> e
+vnoremap <silent> <C-Left> b
+"noremap <silent> <C-Down> 5j
+"noremap <silent> <C-Up> 5k
+noremap <PageDown> 15j
+noremap <PageUp> 15k
+
+" Use the arrows only
+"noremap h <nop>
+"noremap j <nop>
+"noremap k <nop>
+"noremap l <nop>
+
+" Big mess on IDEA
+"map i <Up>
+"map j <Left>
+"map k <Down>
+"noremap s i
+"noremap S I
+
+"noremap , j
+"noremap j h
+"noremap h ,
+
+" Replace i and b. b is betwean, before
+"noremap i k
+"noremap j h
+"noremap k j
+"noremap b i
+"noremap h b
+"noremap B I
+"noremap H B
+" Tried to replace i and h, but did't like it. And H and I are not replaced this way
+"map i <Up>
+"map j <Left>
+"map k <Down>
+"map I <Home>
+"noremap h i
+"noremap H I
+
+" toggle X to -x
+"nnoremap <Leader>uu dli-<ESC>pg~l
+nnoremap <Leader>uu dli-<ESC>pg~<Right>
+" toggle -x to X
+"nnoremap <Leader>ua xg~
+nnoremap <Leader>ua xg~<Right>
+
+" Defined in mswin.vim
+" CTRL-A is Select all
+noremap <C-A> gggH<C-O>G
+inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
+cnoremap <C-A> <C-[>gggH<C-O>G
+onoremap <C-A> <C-[>gggH<C-O>G
+snoremap <C-A> <C-[>gggH<C-O>G
+xnoremap <C-A> <C-[>ggVG
+
+"nnoremap <Enter> o
+"nnoremap <Enter> i<CR>
+
+"nnoremap <S-Enter> o
+" Enter to add new line, but not to switch to insert mode
+" nnoremap <Enter> o<C-[>
+" nnoremap <S-Enter> O<C-[>
+"tmp fix - o does not indent the new line on IDEA
+"nnoremap <Enter> A<CR><C-[>
+"nnoremap <S-Enter> ^kA<CR><C-[>
+
+"nnoremap o $
+"nnoremap u ^
+
+" Can't remap kHome. Does not work even in gVim
+"nnoremap <kHome> 0
+"vnoremap <kHome> 0
+"snoremap <kHome> 0
+nnoremap <Home> ^
+vnoremap <Home> ^
+snoremap <Home> ^
+nnoremap <End> $
+vnoremap <End> $
+snoremap <End> $
+
+" These never worked with my code
+":noremap [[ [m
+":noremap ]] ]m
+
+command RemoveWhiteSpaces :%s/\s\+$//e
+
+
+" Din't work Make quick selection for IDEA usage without vim
+"nnoremap <silent> <C-F2> vi
+"nnoremap <silent> <C-S-F2> va
+
+
+
+" This is when autoshift is enablen for the Plank keyboard
+
+"noremap H h
+"noremap J j
+"noremap K k
+"noremap L l
+" inoremap <S-Ins> <C-[>:echom 'Use "C-r +".Cant paste in input mode'
+
+
+"inoremap <S-Ins> <C-[>pa
+
+
+
 
 
 
