@@ -6,6 +6,8 @@
 "rm .tmux.conf
 "wget https://raw.githubusercontent.com/nikolayivanovivanov/dotfiles_server/main/.tmux.conf
 
+" This did not work - switched to insert mode and pasted some symbols on scroll
+"set mouse=a
 
 set encoding=utf-8
 
@@ -75,7 +77,7 @@ function! Scratch()
 endfunction
 command Scratch call Scratch()
 
-command Reset so $MYVIMRC
+command Reload so $MYVIMRC
 
 vnoremap * y/\V<C-R>=escape(@",'/\')<CR><CR>
 " Delete mark on the current line
@@ -153,7 +155,7 @@ call plug#begin('~/vimfiles/plugged')
 
 Plug 'wsdjeg/vim-fetch'
 
-Plug 'vim-highlightedyank'
+Plug 'machakann/vim-highlightedyank'
 
 Plug 'vim-scripts/ReplaceWithRegister'
 
@@ -210,6 +212,47 @@ Plug 'easymotion/vim-easymotion'
 nmap <Leader>f <Plug>(easymotion-sn)
 
 Plug 'pearofducks/ansible-vim'
+
+Plug 'mhinz/vim-startify'
+
+let g:startify_session_dir = '~/.vim/sessions'
+" I tried this a few times, but if I accidentally close some window or tab,
+" can't restore the original layout. Better to explicitly use SSave
+let g:startify_session_persistence = 0
+let g:startify_session_delete_buffers = 1
+let g:startify_change_to_dir = 1
+let g:startify_change_to_vcs_root = 1
+let g:startify_bookmarks = 1
+
+let g:startify_lists = [
+      \ { 'type': 'commands',  'header': ['   Commands']       },
+      \ { 'type': 'files',     'header': ['   MRU']            },
+      \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+      \ { 'type': 'sessions',  'header': ['   Sessions']       },
+      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+      \ ]
+
+let g:startify_bookmarks = [ {'bh': '~/'}, {'be': '/etc'} ]
+
+let dir_solr = '/var/lib/solr'
+let g:startify_commands = [
+    \ {'default': ['Default', ':source ~/.vim/sessions/devault']},
+    \ {'solr': ['Solr', ':source '.dir_solr.'\ansible\ansible_musicalion_manager\.vim\sessions\default']},
+    \ ]
+
+let g:startify_session_before_save = [
+    \ 'echo "Cleaning up before saving.."',
+    \ 'silent! NERDTreeTabsClose',
+    \ 'silent! TlistClose'
+    \ ]
+
+let g:startify_enable_special = 2
+let g:startify_custom_indices = ['f','g','l','q','w','e','r','t','y','u','o','p','z','x','c','v','n','m']
+let g:startify_padding_left = 3
+let g:startify_custom_header = [
+        \ '                                                Startify',
+        \ ]
+
 
 call plug#end()
 
@@ -304,6 +347,8 @@ cnoreabbrev MFu Ack
 " MO open
 command MOf FZF
 command MOr FZF
+" cnoreabbrev MOb buffer
+command MOb buffers
 
 " MR rename, refactor
 command MRr *Ncgn{new name}<C-[>
