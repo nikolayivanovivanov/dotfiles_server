@@ -78,6 +78,64 @@ command Scratch call Scratch()
 command Reset so $MYVIMRC
 
 vnoremap * y/\V<C-R>=escape(@",'/\')<CR><CR>
+" Delete mark on the current line
+"https://vi.stackexchange.com/a/13986
+function! Delmarks()
+    let l:m = join(filter(
+       \ map(range(char2nr('a'), char2nr('z')), 'nr2char(v:val)'),
+       \ 'line("''".v:val) == line(".")'))
+    if !empty(l:m)
+        exe 'delmarks' l:m
+    endif
+endfunction
+
+nnoremap <Leader>dm :<c-u>call Delmarks()<cr>
+
+
+
+
+" Paragraph movement not to ignore whitespace only lines https://stackoverflow.com/a/2777488/2290045
+function! ParagraphMove(delta, visual, count)
+    normal m'
+    normal |
+    if a:visual
+        normal gv
+    endif
+
+    if a:count == 0
+        let limit = 1
+    else
+        let limit = a:count
+    endif
+
+    let i = 0
+    while i < limit
+        if a:delta > 0
+            " first whitespace-only line following a non-whitespace character           
+            let pos1 = search("\\S", "W")
+            let pos2 = search("^\\s*$", "W")
+            if pos1 == 0 || pos2 == 0
+                let pos = search("\\%$", "W")
+            endif
+        elseif a:delta < 0
+            " first whitespace-only line preceding a non-whitespace character           
+            let pos1 = search("\\S", "bW")
+            let pos2 = search("^\\s*$", "bW")
+            if pos1 == 0 || pos2 == 0
+                let pos = search("\\%^", "bW")
+            endif
+        endif
+        let i += 1
+    endwhile
+    normal |
+endfunction
+
+nnoremap <silent> } :<C-U>call ParagraphMove( 1, 0, v:count)<CR>
+onoremap <silent> } :<C-U>call ParagraphMove( 1, 0, v:count)<CR>
+" vnoremap <silent> } :<C-U>call ParagraphMove( 1, 1)<CR>
+nnoremap <silent> { :<C-U>call ParagraphMove(-1, 0, v:count)<CR>
+onoremap <silent> { :<C-U>call ParagraphMove(-1, 0, v:count)<CR>
+" vnoremap <silent> { :<C-U>call ParagraphMove(-1, 1)<CR>
 
 " For a plugins
 
@@ -92,6 +150,10 @@ endif
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/vimfiles/plugged')
+
+Plug 'wsdjeg/vim-fetch'
+
+Plug 'vim-highlightedyank'
 
 Plug 'vim-scripts/ReplaceWithRegister'
 
@@ -330,6 +392,14 @@ nmap <BS> <nop>
 
 " After yank in visual mode, keep the cursor to the end of the selection, but not back to the initial one.
 "vmap y ygv<C-[>
+
+" instead of <C-A>
+noremap <Leader>a ggVG
+" inoremap <Leader>a <C-O>gg<C-O>gH<C-O>G
+cnoremap <Leader>a <C-C>gggH<C-O>G
+onoremap <Leader>a <C-C>gggH<C-O>G
+snoremap <Leader>a <C-C>gggH<C-O>G
+xnoremap <Leader>a <C-C>ggVG
 
 " \o add empty line below \O - above, but without moving the cursor and without entering in insert mode.
 nnoremap <Leader>o m'o<C-[>`'
@@ -601,32 +671,6 @@ noremap <PageUp> 15k
 "noremap k <nop>
 "noremap l <nop>
 
-" Big mess on IDEA
-"map i <Up>
-"map j <Left>
-"map k <Down>
-"noremap s i
-"noremap S I
-
-"noremap , j
-"noremap j h
-"noremap h ,
-
-" Replace i and b. b is betwean, before
-"noremap i k
-"noremap j h
-"noremap k j
-"noremap b i
-"noremap h b
-"noremap B I
-"noremap H B
-" Tried to replace i and h, but did't like it. And H and I are not replaced this way
-"map i <Up>
-"map j <Left>
-"map k <Down>
-"map I <Home>
-"noremap h i
-"noremap H I
 
 " toggle X to -x
 "nnoremap <Leader>uu dli-<ESC>pg~l
@@ -635,14 +679,14 @@ nnoremap <Leader>uu dli-<ESC>pg~<Right>
 "nnoremap <Leader>ua xg~
 nnoremap <Leader>ua xg~<Right>
 
-" Defined in mswin.vim
+" Same shortcut is used on tmux custim config. Use <Leader>a to select all
 " CTRL-A is Select all
-noremap <C-A> gggH<C-O>G
-inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
-cnoremap <C-A> <C-[>gggH<C-O>G
-onoremap <C-A> <C-[>gggH<C-O>G
-snoremap <C-A> <C-[>gggH<C-O>G
-xnoremap <C-A> <C-[>ggVG
+"noremap <C-A> gggH<C-O>G
+"inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
+"cnoremap <C-A> <C-[>gggH<C-O>G
+"onoremap <C-A> <C-[>gggH<C-O>G
+"snoremap <C-A> <C-[>gggH<C-O>G
+"xnoremap <C-A> <C-[>ggVG
 
 "nnoremap <Enter> o
 "nnoremap <Enter> i<CR>
