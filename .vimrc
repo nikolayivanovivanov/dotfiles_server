@@ -23,8 +23,8 @@ au!
 autocmd VimEnter * silent !echo -ne "\e[2 q"
 augroup END
 " fallback if the above does not work
-autocmd InsertEnter * set cul
-autocmd InsertLeave * set nocul
+"autocmd InsertEnter * set cul
+"autocmd InsertLeave * set nocul
 
 let mapleader=" "
 
@@ -655,8 +655,13 @@ vnoremap <Leader>x[ "bdxh"bPlx
 " Disable highlighting of search till the next search
 "nnoremap <C-C> :noh<CR><C-C>
 "vnoremap <C-C> :noh<CR><C-C>
-vnoremap <ESC> :noh<CR><ESC>
-nnoremap <ESC> :noh<CR><ESC>
+
+" https://stackoverflow.com/a/3691326/2290045
+" vnoremap <ESC> :noh<CR><ESC>
+" nnoremap <ESC> :noh<CR><ESC>
+vnoremap <Leader><ESC> :noh<CR><ESC>
+nnoremap <Leader><ESC> :noh<CR><ESC>
+
 "nnoremap <C-[> :noh<CR><C-[>
 "vnoremap <C-[> :noh<CR><C-[>
 " Disable Escape, because it closes the IDE popup windows (diff, find...). Use Ctrl-c to escape
