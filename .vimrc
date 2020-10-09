@@ -7,7 +7,7 @@
 "wget https://raw.githubusercontent.com/nikolayivanovivanov/dotfiles_server/main/.tmux.conf
 
 " This did not work - switched to insert mode and pasted some symbols on scroll
-"set mouse=a
+set mouse=a
 
 set encoding=utf-8
 
@@ -423,6 +423,8 @@ set hls is
 "nnoremap <Enter> a<Enter><C-[>
 "snoremap <Leader><Space> <C-[>
 "snoremap <Leader>i <C-[>
+
+nnoremap <Leader>b :ls<CR>:b<Space>
 
 " use Backspace for Win better workflow
 "nnoremap <Enter> o
