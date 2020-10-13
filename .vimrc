@@ -57,6 +57,9 @@ set wrap linebreak nolist
 set splitbelow
 set splitright
 
+set breakindent
+let &showbreak='        '
+
 "set spell for text and markdown files
 augroup markdownSpell
     autocmd!
@@ -265,11 +268,17 @@ augroup END
 hi def link MyTodo Todo
 
 
+" In IdeaVim these are autocomplete and show params
+inoremap <C-Space><C-Space> <C-p>
+inoremap <C-Space><Space> <C-n>
+inoremap <C-Space>p <nop>
+inoremap <C-Space><C-P> <nop>
+nnoremap <C-Space> <nop>
 
-inoremap <C-Space> <C-n>
 " to select the last char when starting visual mode reversed
 " Without it it cannot select the last line of the line
-set sel=inclusive
+" this creates problem - selects the new line at the end of the line
+" set sel=inclusive
 
 " Not tested
 noremap <C-F4> <C-[>:bd<CR>
@@ -286,19 +295,12 @@ noremap <C-F4> <C-[>:bd<CR>
 "nmap <C-S-Space><C-S-Space> :Tlist<CR>
 
 
-" try these. They work when line is wrapped. Just like on ideavim
-nnoremap k gk
-nnoremap gk k
-nnoremap j gj
-nnoremap gj j
-
-
 " Custom actions for VIM and IdeaVim consistency. Will use programmable
 " keyboard for shortcuts - max 4 chars
-" MC copy (path, pathFull, r - reference, l - line, location)
-command MCpath let @" = expand("%")
-command MCl let @" = join([expand('%'),  line(".")], ':')
-command MCpathFull let @" = expand("%:p")
+" MY copy (path, pathFull, r - reference, l - line, location)
+command MYpath let @" = expand("%")
+command MYl let @" = join([expand('%'),  line(".")], ':')
+command MYpathFull let @" = expand("%:p")
 " command MCr
 
 " MA apply, action (Fix)
@@ -325,10 +327,11 @@ command MVcheckout Gread
 command MVrm Gremove
 " Rename the current file and the corresponding Vim buffer
 command MVmv Gmove
-command MVcommit echom "Use Vstatus, - to add/remove tile, Enter to edit it, and capital C to commit"
+command MVcommit echom "Use MV, - to add/remove tile, Enter to edit it, and capital C to commit"
+command MVc echom "Use MV, - to add/remove tile, Enter to edit it, and capital C to commit"
+command MVu Git pull
 " command Vstatus Git
 command MV Git
-
 " Like the Idea Annotation - to see who and when made the changes per line
 command MVb Gblame
 command MVa Gblame
@@ -336,19 +339,23 @@ command MVdiff Gdiff
 command MVlog Glog
 command MVh Glog
 command MVdiffToPatch :!git diff HEAD > ~/changes.patch
-command MVPush Gpush
+command MVpush Gpush
 
 " MF find (f or nothing - find file, s - symbol, c - class, without anything - global
 " project search, u - usages if file, U - usages in project)
-cnoreabbrev MFt Ack
-cnoreabbrev MFU Ack
-cnoreabbrev MFu Ack
+cnoreabbrev MF Ack
+"cnoreabbrev MFt Ack
+"cnoreabbrev MFU Ack
+"cnoreabbrev MFu Ack
 
 " MO open
 command MOf FZF
 command MOr FZF
 " cnoreabbrev MOb buffer
-command MOb buffers
+command MOb ls<CR>:b<Space>
+nnoremap <C-tab><tab> :ls<CR>:b<Space>
+inoremap <C-tab><tab> <C-[>:ls<CR>:b<Space>
+snoremap <C-tab><tab> <C-[>:ls<CR>:b<Space>
 
 " MR rename, refactor
 command MRr *Ncgn{new name}<C-[>
@@ -357,15 +364,13 @@ command MRr *Ncgn{new name}<C-[>
 command MWl SLoad
 command MWs SSave
 command MWww set invwrap
-command MWln set invrelativenumber
+command MWln set number relativenumber
 
 " MQ quit - fix the confusion between close and quit. On IdeaVim we cannot bd
 " to close the buffer, but just q to close the tab - tabs vs buffers
 " difference
 command MQ bd
 command MQw w|bd
-
-
 
 
 
@@ -441,9 +446,9 @@ nmap <BS> <nop>
 "vmap y ygv<C-[>
 
 " instead of <C-A>
-noremap <Leader>a ggVG
+nnoremap <Leader>a ggVG
 " inoremap <Leader>a <C-O>gg<C-O>gH<C-O>G
-cnoremap <Leader>a <C-C>gggH<C-O>G
+" cnoremap <Leader>a <C-C>gggH<C-O>G
 onoremap <Leader>a <C-C>gggH<C-O>G
 snoremap <Leader>a <C-C>gggH<C-O>G
 xnoremap <Leader>a <C-C>ggVG
