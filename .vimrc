@@ -210,6 +210,7 @@ Plug 'vim-scripts/taglist.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tmhedberg/matchit'
 Plug 'tpope/vim-commentary'
+Plug 'vim-scripts/argtextobj.vim'
 Plug 'easymotion/vim-easymotion'
 
 nmap <Leader>f <Plug>(easymotion-sn)
@@ -429,8 +430,6 @@ set hls is
 "snoremap <Leader><Space> <C-[>
 "snoremap <Leader>i <C-[>
 
-nnoremap <Leader>b :ls<CR>:b<Space>
-
 " use Backspace for Win better workflow
 "nnoremap <Enter> o
 "nnoremap <S-Enter> O
@@ -445,7 +444,8 @@ nmap <BS> <nop>
 " After yank in visual mode, keep the cursor to the end of the selection, but not back to the initial one.
 "vmap y ygv<C-[>
 
-" instead of <C-A>
+nnoremap <Leader>b :ls<CR>:b<Space>
+
 nnoremap <Leader>a ggVG
 " inoremap <Leader>a <C-O>gg<C-O>gH<C-O>G
 " cnoremap <Leader>a <C-C>gggH<C-O>G
@@ -608,11 +608,16 @@ nnoremap <Leader>; m'A;<C-[>`'
 vnoremap vs a{o0
 " Select variable or property of property of object, including the $ char
 "nnoremap <Leader>vv viwoF$
-vnoremap vp iwoF$
-" nnoremap <Leader>vl ^v$
-vnoremap vl <C-[>^v$
-vnoremap vd a`o2F`
-vnoremap vj iwobb
+" vnoremap vp iwoF$
+" " nnoremap <Leader>vl ^v$
+" vnoremap vl <C-[>^v$
+" vnoremap vd a`o2F`
+" vnoremap vj iwobb
+nnoremap <Leader>vp iwoF$
+nnoremap <Leader>vl <C-[>^v$
+nnoremap <Leader>vd a`o2F`
+nnoremap <Leader>vj iwobb
+
 nnoremap <Leader>yy ^y$
 
 " Not tested Rename current
@@ -652,7 +657,7 @@ vnoremap <Leader>x` "bdxh"bPlx
 nnoremap <Leader>x" "bdi"xh"bPlx
 vnoremap <Leader>x" "bdxh"bPlx
 nnoremap <Leader>x{ "bdi{xh"bPlx
-vnoremap <Leader>x{ "bdxh"bPlx
+vnoremap <Leader>x{ "bddF{"bplx
 nnoremap <Leader>x( "bdi(xh"bPlx
 vnoremap <Leader>x( "bdxh"bPlx
 nnoremap <Leader>x[ "bdi[xh"bPlx
@@ -668,6 +673,10 @@ vnoremap <Leader>x[ "bdxh"bPlx
 " nnoremap <ESC> :noh<CR><ESC>
 vnoremap <Leader><ESC> :noh<CR><ESC>
 nnoremap <Leader><ESC> :noh<CR><ESC>
+" nnoremap ' `
+" vnoremap ' `
+" nnoremap ` '
+" vnoremap ` '
 
 "nnoremap <C-[> :noh<CR><C-[>
 "vnoremap <C-[> :noh<CR><C-[>
@@ -728,6 +737,32 @@ noremap <PageUp> 15k
 "noremap k <nop>
 "noremap l <nop>
 
+" Big mess on IDEA
+"map i <Up>
+"map j <Left>
+"map k <Down>
+"noremap s i
+"noremap S I
+
+"noremap , j
+"noremap j h
+"noremap h ,
+
+" Replace i and b. b is betwean, before
+"noremap i k
+"noremap j h
+"noremap k j
+"noremap b i
+"noremap h b
+"noremap B I
+"noremap H B
+" Tried to replace i and h, but did't like it. And H and I are not replaced this way
+"map i <Up>
+"map j <Left>
+"map k <Down>
+"map I <Home>
+"noremap h i
+"noremap H I
 
 " toggle X to -x
 "nnoremap <Leader>uu dli-<ESC>pg~l
@@ -736,7 +771,7 @@ nnoremap <Leader>uu dli-<ESC>pg~<Right>
 "nnoremap <Leader>ua xg~
 nnoremap <Leader>ua xg~<Right>
 
-" Same shortcut is used on tmux custim config. Use <Leader>a to select all
+" Defined in mswin.vim
 " CTRL-A is Select all
 "noremap <C-A> gggH<C-O>G
 "inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
@@ -767,8 +802,10 @@ nnoremap <Home> ^
 vnoremap <Home> ^
 snoremap <Home> ^
 nnoremap <End> $
-vnoremap <End> $
-snoremap <End> $
+" when set set sel=inclusive is set
+" this creates problem - selects the new line at the end of the line
+vnoremap <End> g_
+snoremap <End> g_
 
 " These never worked with my code
 ":noremap [[ [m
@@ -790,9 +827,9 @@ command RemoveWhiteSpaces :%s/\s\+$//e
 "noremap K k
 "noremap L l
 " inoremap <S-Ins> <C-[>:echom 'Use "C-r +".Cant paste in input mode'
+inoremap <S-Ins> <C-[>pa
 
 
-"inoremap <S-Ins> <C-[>pa
 
 
 
