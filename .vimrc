@@ -608,16 +608,11 @@ nnoremap <Leader>; m'A;<C-[>`'
 vnoremap vs a{o0
 " Select variable or property of property of object, including the $ char
 "nnoremap <Leader>vv viwoF$
-" vnoremap vp iwoF$
-" " nnoremap <Leader>vl ^v$
-" vnoremap vl <C-[>^v$
-" vnoremap vd a`o2F`
-" vnoremap vj iwobb
-nnoremap <Leader>vp iwoF$
-nnoremap <Leader>vl <C-[>^v$
-nnoremap <Leader>vd a`o2F`
-nnoremap <Leader>vj iwobb
-
+vnoremap vp iwoF$
+" nnoremap <Leader>vl ^v$
+vnoremap vl <C-[>^v$
+vnoremap vd a`o2F`
+vnoremap vj iwobb
 nnoremap <Leader>yy ^y$
 
 " Not tested Rename current
