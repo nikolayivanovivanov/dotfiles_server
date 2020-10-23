@@ -178,7 +178,9 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'mhinz/vim-signify'
 " Show buffers as subtabs
-Plug 'ap/vim-buftabline'
+" Plug 'ap/vim-buftabline'
+" Plug 'jlanzarotta/bufexplorer'
+Plug 'jeetsukumaran/vim-buffergator'
 
 "Plug 'vim-airline/vim-airline'
 Plug 'itchyny/lightline.vim'
@@ -353,10 +355,13 @@ cnoreabbrev MF Ack
 command MOf FZF
 command MOr FZF
 " cnoreabbrev MOb buffer
-command MOb ls<CR>:b<Space>
-nnoremap <C-tab><tab> :ls<CR>:b<Space>
-inoremap <C-tab><tab> <C-[>:ls<CR>:b<Space>
-snoremap <C-tab><tab> <C-[>:ls<CR>:b<Space>
+" command MOb ls<CR>:b<Space>
+" Ctrl-tab does not work on terminal. Use the <Leader>be plugin keymap
+" nnoremap <C-tab><tab> :ls<CR>:b<Space>
+" inoremap <C-tab><tab> <C-[>:ls<CR>:b<Space>
+" snoremap <C-tab><tab> <C-[>:ls<CR>:b<Space>
+nnoremap <C-j>j :BuffergatorToggle<CR>
+cnoreabbrev MOb BuffergatorToggle
 
 " MR rename, refactor
 command MRr *Ncgn{new name}<C-[>
