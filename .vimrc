@@ -284,6 +284,8 @@ nnoremap <C-Space> <nop>
 " this creates problem - selects the new line at the end of the line
 " set sel=inclusive
 
+commands_server.vim file
+
 " Not tested
 noremap <C-F4> <C-[>:bd<CR>
 " Does not work, because the terminals cannot make difference between
@@ -299,18 +301,20 @@ noremap <C-F4> <C-[>:bd<CR>
 "nmap <C-S-Space><C-S-Space> :Tlist<CR>
 
 
+
 " Custom actions for VIM and IdeaVim consistency. Will use programmable
 " keyboard for shortcuts - max 4 chars
 " MY copy (path, pathFull, r - reference, l - line, location)
 command MYpath let @" = expand("%")
 command MYl let @" = join([expand('%'),  line(".")], ':')
 command MYpathFull let @" = expand("%:p")
+command MYfullPath let @" = expand("%:p")
 " command MCr
 
 " MA apply, action (Fix)
-command MAfix z=
-command MAf z=
-
+" Just use z= on IdeaVim too
+" command MAfix z=
+" command MAf z=
 " MT tool
 command MTp NERDTreeToggle
 command MTP NERDTreeToggle
@@ -319,6 +323,7 @@ command MTf Ack
 command MTh TlistClose | NERDTreeClose
 command MTH TlistClose | NERDTreeClose
 command MTv Git
+command MTl <C-W>W
 
 " MV VCS (c,u,h,m - commit, update, history, menu...)
 " Will add custom commands to try to make them common for svn too
@@ -353,8 +358,10 @@ cnoreabbrev MF Ack
 "cnoreabbrev MFu Ack
 
 " MO open
+command MO FZF
 command MOf FZF
 command MOr FZF
+command MOrecent FZF
 " cnoreabbrev MOb buffer
 " command MOb ls<CR>:b<Space>
 " Ctrl-tab does not work on terminal. Use the <Leader>be plugin keymap
@@ -372,12 +379,18 @@ command MWl SLoad
 command MWs SSave
 command MWww set invwrap
 command MWln set number relativenumber
+command MWnoln set nonumber norelativenumber
 
 " MQ quit - fix the confusion between close and quit. On IdeaVim we cannot bd
 " to close the buffer, but just q to close the tab - tabs vs buffers
 " difference
 command MQ bd
 command MQw w|bd
+
+command MBall VdebugViewBreakpoints
+command MBls VdebugViewBreakpoints
+
+" MWW wordwrap
 
 
 
@@ -452,12 +465,12 @@ nmap <BS> <nop>
 
 nnoremap <Leader>b :ls<CR>:b<Space>
 
-nnoremap <Leader>a ggVG
-" inoremap <Leader>a <C-O>gg<C-O>gH<C-O>G
-" cnoremap <Leader>a <C-C>gggH<C-O>G
-onoremap <Leader>a <C-C>gggH<C-O>G
-snoremap <Leader>a <C-C>gggH<C-O>G
-xnoremap <Leader>a <C-C>ggVG
+nnoremap <Leader>A ggVG
+" inoremap <Leader>A <C-O>gg<C-O>gH<C-O>G
+" cnoremap <Leader>A <C-C>gggH<C-O>G
+onoremap <Leader>A <C-C>gggH<C-O>G
+snoremap <Leader>A <C-C>gggH<C-O>G
+xnoremap <Leader>A <C-C>ggVG
 
 " \o add empty line below \O - above, but without moving the cursor and without entering in insert mode.
 nnoremap <Leader>o m'o<C-[>`'
@@ -606,7 +619,7 @@ nnoremap <Leader>P "0P
 "This messes the ideavim surround plugin
 "nnoremap <silent> "" :registers "0123456789abcdefghijklmnopqrstuvwxyz*+.<CR>
 " Bookmark current location under ', append ; at the end of line, go to bookmarked column
-nnoremap <Leader>; m'A;<C-[>`'
+nnoremap <Leader>; m'A;<C-[>`':wa<CR>
 " Delete/yank/select whole section (function, condition, while...).
 " Can be used to select if section, then the else one by repeading again
 " This works if you are inside or on the brackets, but not on the function name
@@ -615,9 +628,18 @@ vnoremap vs a{o0
 " Select variable or property of property of object, including the $ char
 "nnoremap <Leader>vv viwoF$
 vnoremap vp iwoF$
+vnoremap vv iwoF$
+" visualize array variable
+vnoremap va <C-[>f]vF$
 " nnoremap <Leader>vl ^v$
-vnoremap vl <C-[>^v$
-vnoremap vd a`o2F`
+" Visualise line without the white space at the beginning of the line
+vnoremap vl <C-[>^vg_
+nnoremap <Leader>vv ^vg_
+" This works for cases like table.`field`
+vnoremap vd a`oB
+" This works for `table`.`field`
+vnoremap v` a`o2F`
+" this workd for obj.prop
 vnoremap vj iwobb
 nnoremap <Leader>yy ^y$
 
@@ -635,7 +657,7 @@ nnoremap <Leader>gv `]
 "nnoremap <Leader>' diwi'<C-C>pa'<ESC>
 "vnoremap <Leader>' d<C-C>i'<C-c>pa'<ESC>
 
-" Indeed the surround plugin works
+" The surround plugin does not work when using macros in Ideavim
 nnoremap <Leader>' diwi'<ESC>pa'<ESC>
 vnoremap <Leader>' d<C-C>i'<ESC>pa'<ESC>
 nnoremap <Leader>` diwi`<ESC>pa`<ESC>
