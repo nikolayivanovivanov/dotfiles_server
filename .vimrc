@@ -284,7 +284,7 @@ nnoremap <C-Space> <nop>
 " this creates problem - selects the new line at the end of the line
 " set sel=inclusive
 
-commands_server.vim file
+" commands_server.vim file
 
 " Not tested
 noremap <C-F4> <C-[>:bd<CR>
