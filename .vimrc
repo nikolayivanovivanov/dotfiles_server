@@ -23,8 +23,9 @@ au!
 autocmd VimEnter * silent !echo -ne "\e[2 q"
 augroup END
 " fallback if the above does not work
-"autocmd InsertEnter * set cul
-"autocmd InsertLeave * set nocul
+autocmd InsertEnter * set cul
+autocmd InsertLeave * set nocul
+hi CursorLine cterm=NONE ctermbg=black
 
 let mapleader=" "
 
