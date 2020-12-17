@@ -658,33 +658,36 @@ nnoremap <Leader>gv `]
 "vnoremap <Leader>' d<C-C>i'<C-c>pa'<ESC>
 
 " The surround plugin does not work when using macros in Ideavim
-nnoremap <Leader>' diwi'<ESC>pa'<ESC>
-vnoremap <Leader>' d<C-C>i'<ESC>pa'<ESC>
-nnoremap <Leader>` diwi`<ESC>pa`<ESC>
-vnoremap <Leader>` d<C-C>i`<ESC>pa`<ESC>
-nnoremap <Leader>" diwi"<ESC>pa"<ESC>
-vnoremap <Leader>" d<C-C>i"<ESC>pa"<ESC>
-nnoremap <Leader>{ diwi{<ESC>pa}<ESC>
-vnoremap <Leader>{ d<C-C>i{<ESC>pa}<ESC>
-nnoremap <Leader>( diwi(<ESC>pa)<ESC>
-vnoremap <Leader>( d<C-C>i(<ESC>pa)<ESC>
-nnoremap <Leader>[ diwi[<ESC>pa]<ESC>
-vnoremap <Leader>[ d<C-C>i[<ESC>pa]<ESC>
-nnoremap <Leader>} diwi{{ <ESC>pa }}<ESC>
-vnoremap <Leader>} d<C-C>i{{ <ESC>pa }}<ESC>
+nnoremap <Leader>' ciw'<C-R>"'<C-[>
+vnoremap <Leader>' c'<C-R>"'<C-[>
+nnoremap <Leader>` ciw`<C-R>"`<C-[>
+vnoremap <Leader>` c`<C-R>"`<C-[>
+nnoremap <Leader>" ciw"<C-R>""<C-[>
+vnoremap <Leader>" c"<C-R>""<C-[>
+nnoremap <Leader>{ ciw{<C-R>"}<C-[>
+vnoremap <Leader>{ c{<C-R>"}<C-[>
+nnoremap <Leader>( ciw(<C-R>")<C-[>
+vnoremap <Leader>( c(<C-R>")<C-[>
+nnoremap <Leader>[ ciw[<C-R>"]<C-[>
+vnoremap <Leader>[ c[<C-R>"]<C-[>
+nnoremap <Leader>} ciw{{ <C-R>" }}<C-[>
+vnoremap <Leader>} c{{ <C-R>" }}<C-[>
 " Now delete the surroundings
-nnoremap <Leader>x' "bdi'xh"bPlx
-vnoremap <Leader>x' "bdxh"bPlx
-nnoremap <Leader>x` "bdi`xh"bPlx
-vnoremap <Leader>x` "bdxh"bPlx
-nnoremap <Leader>x" "bdi"xh"bPlx
-vnoremap <Leader>x" "bdxh"bPlx
-nnoremap <Leader>x{ "bdi{xh"bPlx
-vnoremap <Leader>x{ "bddF{"bplx
-nnoremap <Leader>x( "bdi(xh"bPlx
-vnoremap <Leader>x( "bdxh"bPlx
-nnoremap <Leader>x[ "bdi[xh"bPlx
-vnoremap <Leader>x[ "bdxh"bPlx
+" All are the same, so xx could be used everywhere
+nnoremap <Leader>xx "bdi'h"bPl2x
+vnoremap <Leader>xx "bdh"bPl2x
+nnoremap <Leader>x' "bdi'h"bPl2x
+vnoremap <Leader>x' "bdh"bPl2x
+nnoremap <Leader>x` "bdi'h"bPl2x
+vnoremap <Leader>x` "bdh"bPl2x
+nnoremap <Leader>x" "bdi'h"bPl2x
+vnoremap <Leader>x" "bdh"bPl2x
+nnoremap <Leader>x{ "bdi'h"bPl2x
+vnoremap <Leader>x{ "bdh"bPl2x
+nnoremap <Leader>x( "bdi'h"bPl2x
+vnoremap <Leader>x( "bdh"bPl2x
+nnoremap <Leader>x[ "bdi'h"bPl2x
+vnoremap <Leader>x[ "bdh"bPl2x
 
 " Disable highlighting of search till the next search
 " Disable highlighting of search till the next search
