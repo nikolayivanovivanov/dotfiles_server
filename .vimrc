@@ -286,6 +286,7 @@ nnoremap <C-Space> <nop>
 
 " commands_server.vim file
 
+
 " Not tested
 noremap <C-F4> <C-[>:bd<CR>
 " Does not work, because the terminals cannot make difference between
@@ -324,6 +325,8 @@ command MTh TlistClose | NERDTreeClose
 command MTH TlistClose | NERDTreeClose
 command MTv Git
 command MTl <C-W>W
+command MTb VdebugViewBreakpoints
+command MTm execute "normal :marks<CR>"
 
 " MV VCS (c,u,h,m - commit, update, history, menu...)
 " Will add custom commands to try to make them common for svn too
@@ -368,11 +371,14 @@ command MOrecent FZF
 " nnoremap <C-tab><tab> :ls<CR>:b<Space>
 " inoremap <C-tab><tab> <C-[>:ls<CR>:b<Space>
 " snoremap <C-tab><tab> <C-[>:ls<CR>:b<Space>
-nnoremap <C-j>j :BuffergatorToggle<CR>
+" fixme - Ctrl-J is new line in Bash and does not work without unmapping
+" to avoid problems, find another way
+nnoremap <F9>t :BuffergatorToggle<CR>
 cnoreabbrev MOb BuffergatorToggle
 
-" MR rename, refactor
-command MRr *Ncgn{new name}<C-[>
+" MC change
+command MC *Ncgn{new name}<C-[>
+command MCr *Ncgn{new name}<C-[>
 
 " Mw workspace
 command MWl SLoad
@@ -387,10 +393,39 @@ command MWnoln set nonumber norelativenumber
 command MQ bd
 command MQw w|bd
 
-command MBall VdebugViewBreakpoints
-command MBls VdebugViewBreakpoints
+" command MBall VdebugViewBreakpoints
+" command MBls VdebugViewBreakpoints
 
 " MWW wordwrap
+"
+
+" Copy last yanked to some retister
+command MRq let @q=@* | reg q
+command MRw let @w=@* | reg w
+command MRe let @e=@* | reg e
+command MRr let @r=@* | reg r
+command MRt let @t=@* | reg t
+command MRy let @y=@* | reg y
+command MRu let @u=@* | reg u
+command MRi let @i=@* | reg i
+command MRo let @o=@* | reg o
+command MRp let @p=@* | reg p
+command MRa let @a=@* | reg a
+command MRs let @s=@* | reg s
+command MRd let @d=@* | reg d
+command MRf let @f=@* | reg f
+command MRg let @g=@* | reg g
+command MRh let @h=@* | reg h
+command MRj let @j=@* | reg j
+command MRk let @k=@* | reg k
+command MRl let @l=@* | reg l
+command MRz let @z=@* | reg z
+command MRx let @x=@* | reg x
+command MRc let @c=@* | reg c
+command MRv let @v=@* | reg v
+command MRb let @b=@* | reg b
+command MRn let @n=@* | reg n
+command MRm let @m=@* | reg m
 
 
 
@@ -668,6 +703,8 @@ nnoremap <Leader>{ ciw{<C-R>"}<C-[>
 vnoremap <Leader>{ c{<C-R>"}<C-[>
 nnoremap <Leader>( ciw(<C-R>")<C-[>
 vnoremap <Leader>( c(<C-R>")<C-[>
+nnoremap <Leader>< ciw<<C-R>"><C-[>
+vnoremap <Leader>< c<<C-R>"><C-[>
 nnoremap <Leader>[ ciw[<C-R>"]<C-[>
 vnoremap <Leader>[ c[<C-R>"]<C-[>
 nnoremap <Leader>} ciw{{ <C-R>" }}<C-[>
@@ -686,8 +723,11 @@ nnoremap <Leader>x{ "bdi'h"bPl2x
 vnoremap <Leader>x{ "bdh"bPl2x
 nnoremap <Leader>x( "bdi'h"bPl2x
 vnoremap <Leader>x( "bdh"bPl2x
+nnoremap <Leader>x< "bdi'h"bPl2x
+vnoremap <Leader>x> "bdh"bPl2x
 nnoremap <Leader>x[ "bdi'h"bPl2x
 vnoremap <Leader>x[ "bdh"bPl2x
+
 
 " Disable highlighting of search till the next search
 " Disable highlighting of search till the next search
@@ -852,8 +892,18 @@ command RemoveWhiteSpaces :%s/\s\+$//e
 "noremap J j
 "noremap K k
 "noremap L l
+
+" Musicalion specific
+" Switch to live db
+" Didn't work, because of Idea open file delay
+" nnoremap <Leader><Leader>mnolive :e config_local.php<CR>gg/['database' => 'musicalion_live-dev1'<CR>k_<C-V>5jI//<C-[>
+nnoremap <Leader><Leader>mlive gg/\V['database' => 'musicalion_live-dev1'<CR>k_<C-V>5jlx:noh<CR><ESC>
+nnoremap <Leader><Leader>mnolive gg/\V['database' => 'musicalion_live-dev1'<CR>k_<C-V>5jI//<C-[>:noh<CR><ESC>
+nnoremap <Leader><Leader>mlog gg/\V$GLOBALS['AOA_CONFIG']['LOG'] = array('sql'<CR>:noh<CR><ESC>
+nnoremap <Leader><Leader>mnolog gg/\V$GLOBALS['AOA_CONFIG']['LOG'] = array('sql'<CR>:noh<CR><ESC>
+
 " inoremap <S-Ins> <C-[>:echom 'Use "C-r +".Cant paste in input mode'
-inoremap <S-Ins> <C-[>pa
+inoremap <S-Ins> <C-[>pi
 
 
 
