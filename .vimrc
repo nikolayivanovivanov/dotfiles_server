@@ -210,6 +210,7 @@ let NERDTreeQuitOnOpen=1
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'mileszs/ack.vim'
 Plug 'vim-scripts/taglist.vim'
+Plug 'tpope/vim-surround'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tmhedberg/matchit'
 Plug 'tpope/vim-commentary'
@@ -280,9 +281,21 @@ inoremap <C-Space><C-P> <nop>
 nnoremap <C-Space> <nop>
 
 " to select the last char when starting visual mode reversed
-" Without it it cannot select the last line of the line
+" Without it it cannot select the last char of the line
 " this creates problem - selects the new line at the end of the line
-" set sel=inclusive
+set sel=inclusive
+" Fix the problem
+vnoremap $ g_
+
+
+" For ideavim, we do not use \ to escape " and \
+" c style
+vnoremap vc <C-[>:set isk+=$,.,[,],',\",-,>,:<CR>viw<C-[>:set isk-=$,.,[,],',\",-,>,:<CR>gv
+" java, javascript style
+vnoremap vj <C-[>:set isk+=$,.,[,],',\"<CR>viw<C-[>:set isk-=$,.,[,],',\"<CR>gv
+vnoremap vd <C-[>:set isk+=`,.<CR>viwo<C-[>:set isk-=`,.<CR>gv
+" php style
+vnoremap vv <C-[>:set isk+=$,[,],\\,',\",-,>,:<CR>viw<C-[>:set isk-=$,[,],\\,',\",-,>,:<CR>gv
 
 " commands_server.vim file
 
@@ -659,24 +672,35 @@ nnoremap <Leader>; m'A;<C-[>`':wa<CR>
 " Can be used to select if section, then the else one by repeading again
 " This works if you are inside or on the brackets, but not on the function name
 " nnoremap <Leader>vs va{o0
-vnoremap vs a{o0
-" Select variable or property of property of object, including the $ char
-"nnoremap <Leader>vv viwoF$
-vnoremap vp iwoF$
-vnoremap vv iwoF$
-" visualize array variable
-vnoremap va <C-[>f]vF$
-" nnoremap <Leader>vl ^v$
-" Visualise line without the white space at the beginning of the line
-vnoremap vl <C-[>^vg_
-nnoremap <Leader>vv ^vg_
-" This works for cases like table.`field`
-vnoremap vd a`oB
-" This works for `table`.`field`
-vnoremap v` a`o2F`
-" this workd for obj.prop
-vnoremap vj iwobb
+" vnoremap vs a{o0
+" " Select variable or property of property of object, including the $ char
+" "nnoremap <Leader>vv viwoF$
+" vnoremap vp iwoF$
+" vnoremap vv iwoF$
+" " visualize array variable
+" vnoremap va <C-[>f]vF$
+" " nnoremap <Leader>vl ^v$
+" " Visualise line without the white space at the beginning of the line
+" vnoremap vl <C-[>^vg_
+" " This works for cases like table.`field`
+" vnoremap vd a`oB
+" " This works for `table`.`field`
+" vnoremap v` a`o2F`
+" " this workd for obj.prop
+" vnoremap vj iwobb
+" " vnoremap vj iwoB
+" " variable template ansible
+" vnoremap vta a2{
 nnoremap <Leader>yy ^y$
+nnoremap <Leader>vv ^vg_
+
+
+vnoremap vs a{o0
+" vnoremap vl <C-[>^vg_
+" Ansible variable
+" This does not work, because there could be spaces {{ var_name }}
+" nnoremap <Leader>vta :set isk+={,},.<CR>viwo<C-[>:set isk-={,},.<CR>gv
+vnoremap vta a2{
 
 " Not tested Rename current
 nnoremap c* *<C-o>cgn
