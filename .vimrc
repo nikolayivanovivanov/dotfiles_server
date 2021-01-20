@@ -163,6 +163,8 @@ Plug 'machakann/vim-highlightedyank'
 
 Plug 'vim-scripts/ReplaceWithRegister'
 
+Plug 'tommcdo/vim-exchange'
+
 Plug 'tpope/vim-fugitive'
 
 " Will use Signify
