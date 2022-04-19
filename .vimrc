@@ -916,10 +916,24 @@ command RemoveWhiteSpaces :%s/\s\+$//e
 
 " This is when autoshift is enablen for the Plank keyboard
 
-"noremap H h
-"noremap J j
-"noremap K k
-"noremap L l
+noremap H b
+" noremap H 15h
+noremap J 5j
+noremap K 5k
+noremap L e
+" noremap L 15l
+
+
+" nnoremap h ^
+" vnoremap h ^
+" snoremap h ^
+
+" noremap H h
+" noremap J j
+" noremap K k
+" noremap L l
+nnoremap <Leader><S-j> J
+
 
 " Musicalion specific
 " Switch to live db
