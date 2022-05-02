@@ -157,7 +157,8 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/vimfiles/plugged')
 
-Plug 'vim-scripts/YankRing.vim'
+" Messes up my map . custom mapping
+" Plug 'vim-scripts/YankRing.vim'
 
 Plug 'wsdjeg/vim-fetch'
 
