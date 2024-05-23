@@ -50,7 +50,7 @@ highlight SpellRare cterm=underline
 
 set timeoutlen=1000 ttimeoutlen=0
 
-set wrap linebreak nolist
+set nowrap linebreak nolist
 
 " Splitting the window automatically focus the new split, but as the default
 " config is splitabove and splitleft, the false impression is that we do not
