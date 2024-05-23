@@ -672,7 +672,7 @@ nnoremap <Leader>P "0P
 "This messes the ideavim surround plugin
 "nnoremap <silent> "" :registers "0123456789abcdefghijklmnopqrstuvwxyz*+.<CR>
 " Bookmark current location under ', append ; at the end of line, go to bookmarked column
-;nnoremap <Leader>; m'A;<C-[>`':wa<CR>
+nnoremap <Leader>; m'A;<C-[>`':wa<CR>
 " Delete/yank/select whole section (function, condition, while...).
 " Can be used to select if section, then the else one by repeading again
 " This works if you are inside or on the brackets, but not on the function name
